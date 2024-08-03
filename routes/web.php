@@ -3,19 +3,24 @@
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
-Route::get('/employees', [EmployeesController::class, 'index'])->middleware(['auth', 'verified'])->name('employees');
+Route::get('/employees', [EmployeesController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('employees');
 
-Route::get('/departement', [DepartementController::class, 'index'])->middleware(['auth', 'verified'])->name('departement');
+Route::get('/departement', [DepartementController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('departement');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,12 +37,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-Route::get('/employees/tambah', [EmployeesController::class, 'tambah'])->name('employees.tambah');
-Route::post('/employees/proses', [EmployeesController::class, 'proses'])->name('employees.proses');
-Route::get('/employees/edit/{id}', [EmployeesController::class, 'edit'])->name('employees.edit');
-Route::put('/employees/update/{id}', [EmployeesController::class, 'update'])->name('employees.update');
-Route::delete('/employees/delete/{id}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
+    Route::get('/employees/tambah', [EmployeesController::class, 'tambah'])->name('employees.tambah');
+    Route::post('/employees/proses', [EmployeesController::class, 'proses'])->name('employees.proses');
+    Route::get('/employees/edit/{id}', [EmployeesController::class, 'edit'])->name('employees.edit');
+    Route::put('/employees/update/{id}', [EmployeesController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/delete/{id}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
 });
 
-
 require __DIR__ . '/auth.php';
+
